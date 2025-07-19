@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>
+			Generate link 
+		</title>	
+	</head>
+
+	<style>
+		.radioLeft input{
+			text-align: left;
+			display:inline;
+		}
+	</style>
+	
+	<body style = "text-align:center;">
+		
+		<h1 style = "color:rgb(0, 0, 0);" >
+			Click to generate link
+		</h1>
+			
+		<form>
+		<p>Select training mode:</p>
+		<div class="radioLeft">
+		
+			<input type="radio" id="user-choice" name="mode" value="UC"
+			>
+			<label for="user-choice">User Choice</label>
+
+			<input type="radio" id="no-user-choice" name="mode" value="NUC"
+			checked>
+			<label for="no-user-choice">No User Choice</label>
+
+			<input type="radio" id="no-user-choice-sep" name="mode" value="NUCS"
+			checked>
+			<label for="no-user-choice">No User Choice Separability</label>
+			
+			<!-- <input type="radio" id="mixed" name="mode" value="M"
+			checked> 
+			<label for="mixed">Mixed</label> -->
+			
+		</div>
+		
+		<div style = "padding-top:20px;"></div>
+		
+		<button onclick = "setSearchParams(getCounter(0),getMode());">
+			Go to page
+		</button>
+
+	</form>
+		
+		<script>
+			const radioButtons = document.querySelectorAll('input[name="mode"]');
+
+			function getMode() {
+				let selectedMode;
+				for (const radioButton of radioButtons) {
+					if (radioButton.checked) {
+						selectedMode = radioButton.value;
+						break;
+					}
+				}
+				
+				console.log(selectedMode)
+				return selectedMode
+			}
+
+			
+			function setSearchParams(pid,mode) {
+				var url = new URL("http://127.0.0.1:5173/");
+
+				// let params = new URLSearchParams(url);
+				// console.log(params)
+
+				//params.set('id',val)
+				url.searchParams.append('id', pid);
+				url.searchParams.append('training', mode);
+        		//window.location=url
+				window.open(url, '_blank').focus();
+					//down.innerHTML = url;
+			}
+
+      function getCounter(start) {
+		//window.localStorage.removeItem('counter');
+
+		var counter = start;
+
+		if(localStorage['counter'] != undefined && !isNaN(localStorage['counter'])){
+			counter = localStorage.getItem('counter');
+			counter ++
+			localStorage.setItem('counter',counter) 
+			console.log('retrieving from storage: ',counter)
+		}
+		else{
+			counter ++
+			localStorage.setItem('counter',counter) 
+			console.log('setting: ',counter)
+		} 
+		
+        //return Math.floor(Math.random() * max);
+		return counter;
+      }
+		</script>
+	</body>
+</html>					
